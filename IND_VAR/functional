@@ -1,0 +1,68 @@
+#get list of text files
+list_of_files <- list.files(path = "/mnt/tigrlab/projects/jgallucci/ind_var/fmri", recursive = TRUE,
+                            pattern = "\\.txt$", 
+                            full.names = TRUE)
+
+#read text files need[1:59,412]
+txt_files_df <- lapply(list_of_files, function(x) {x = read.table(file = x, header = FALSE, sep =",", nrows = 59412)})
+#combie text files into a dataframe
+combined_df <- do.call("cbind", lapply(txt_files_df, as.data.frame))
+#90 participants (rows) by 59,412 voxels (columns)
+df.final <- as.data.frame(t(combined_df))
+
+#pairwise correlational distance
+#pairwise distance measure 0 to 1, 0 is less distance = more similar, 1 is more distance = less similar
+corr = rdist::pdist(df.final, metric = "correlation")
+#calculate mean distance for each subject
+corr[corr ==0] = NA
+distance = rowMeans(corr,na.rm = TRUE)
+ctrl = (corr[1:34,1:34])
+ssd = (corr[35:90,35:90])
+
+#compare mean distance between groups
+ctrl = distance[1:34]
+schz = distance[35:90]
+t.test(ctrl,schz)
+#box plot for mean correlational distance difference in groups
+library(ggsignif)
+library(ggplot2)
+####BOXPLOT FIGURE
+ggplot(FWD_DIS, aes(x=Group, y=Mean_distance)) + geom_boxplot() +geom_point()+ geom_signif(comparisons = list(c("SSD", "TDC")), map_signif_level=TRUE)
+
+#load libraries
+library(corrplot)
+library(tidyverse)
+#################################
+corrdf = as.data.frame(corr)
+#rows belong to TDC vs. SSD, and add unique identifier (to make sure sorting properly
+rownames(corrdf) <- paste(c(rep('TDC', 34), rep('SSD', 56)), seq(1:nrow(corrdf)), sep='_')
+colnames(corrdf) <- rownames(corrdf)
+#change diagnoal values from 0 to lowest value, to maximize scale
+diag(corrdf) <- 0.4200803 
+
+#################################
+#THIS IS WHERE WE'RE ORDERING AND SORTING
+#for ease, make df containing separate HC and SSD
+TDC_df <- corrdf[grepl('TDC', rownames(corrdf)),grepl('TDC', colnames(corrdf))]
+SSD_df <- corrdf[grepl('SSD', rownames(corrdf)),grepl('SSD', colnames(corrdf))]
+
+#get order of HC/SSD columns by decreasing//increasing columnsum value
+TDC_order <- colnames(TDC_df[order(colSums(corrdf[, names(corrdf) %in% names(TDC_df)]), decreasing=T)])
+SSD_order <- colnames(SSD_df[order(colSums(corrdf[, names(corrdf) %in% names(SSD_df)]))])
+#make explicit the desired organization of the correlation matrix 
+order <- c(TDC_order, SSD_order)
+#reorganize corrmat as desired
+corrdf <- corrdf[order,order]
+#################################
+#MAKE HEATPLOT
+#set custom colour scale, for plot
+myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
+#make sure corrmat is a matrix, for plotting
+corrdf <- as.matrix(corrdf)
+#visualize matrix for HC only
+corrplot(corrdf, 
+         method='color', #get full square, instead of circles
+         cl.lim=c(0.4,1), #set limits of colour scale
+         col=myColours(100)) #use 100 unique colour shared
+#draw rectangles, based on group
+corrRect(c(sum(grepl('TDC', colnames(corrdf))), sum(grepl('SSD', colnames(corrdf)))))
