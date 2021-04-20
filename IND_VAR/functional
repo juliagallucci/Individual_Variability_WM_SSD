@@ -14,7 +14,6 @@ df.final <- as.data.frame(t(combined_df))
 #pairwise distance measure 0 to 1, 0 is less distance = more similar, 1 is more distance = less similar
 corr = rdist::pdist(df.final, metric = "correlation")
 #calculate mean distance for each subject
-corr[corr ==0] = NA
 distance = rowMeans(corr,na.rm = TRUE)
 ctrl = (corr[1:34,1:34])
 ssd = (corr[35:90,35:90])
@@ -28,6 +27,11 @@ library(ggsignif)
 library(ggplot2)
 ####BOXPLOT FIGURE
 ggplot(FWD_DIS, aes(x=Group, y=Mean_distance)) + geom_boxplot() +geom_point()+ geom_signif(comparisons = list(c("SSD", "TDC")), map_signif_level=TRUE)
+
+####MEAN DISTANCE VS RESPONSE ACCURACY FIGURE
+library(readr)
+FWD_DIS <- read_csv("FWD_DIS.csv") #csv file with mean correlational distances, d' , group 
+ggplot(FWD_DIS,aes(y=Mean_distance,x=D_Prime,color=Group))+geom_point()+ylab('Mean correlational distance')+xlab('Response accuracy')+stat_smooth(method="lm",se=TRUE)
 
 #load libraries
 library(corrplot)
