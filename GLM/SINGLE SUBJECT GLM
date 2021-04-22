@@ -88,7 +88,7 @@ for sub in files:
 
     # first level model input
     noise_model = 'ar1'
-    regressor_file = '/projects/jgallucci/NEUR/data/preprocess/'+sub+'/NEUR_CMH_'+sub[7:]+'_01_01_NBack.tsv'
+    regressor_file = '/projects/jgallucci/NEUR/data/preprocess/'+sub+'/'+sub+'_ses-01_task-nbk_run-1_desc-confounds_regressors.tsv'
     conf = extract_confound_regressors(regressor_file)
     onset_file = '/projects/jgallucci/NEUR/data/preprocess/'+sub+'/NEUR_CMH_'+sub[7:]+'_01_01_NBack.tsv'
     event = extract_event_onset(onset_file)
