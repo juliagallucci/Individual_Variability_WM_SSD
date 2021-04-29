@@ -113,7 +113,7 @@ for sub in files:
     basic_contrasts["threeback_minus_oneback"] = (
     basic_contrasts["threeback_block"] - basic_contrasts["oneback_block"])
     
-    #compute t-maps
+    #compute t-maps and beta-maps
     contrasts_id= ["threeback_minus_oneback","oneback_block","threeback_block"]
     t_map = first_lv_model.compute_contrast(basic_contrasts["threeback_block"],stat_type="t", output_type="stat")
     t_map.to_filename('/projects/jgallucci/NEUR/data/analysis/'+sub+'/'+sub+'_1st_GLM_threeback_tmap.nii.gz')
