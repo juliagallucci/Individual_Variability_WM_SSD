@@ -121,3 +121,10 @@ for sub in files:
     t_map_1back.to_filename('/projects/jgallucci/NEUR/data/analysis/'+sub+'/'+sub+'_1st_GLM_oneback_tmap.nii.gz')
     t_map_3min1back = first_lv_model.compute_contrast(basic_contrasts["threeback_minus_oneback"],stat_type = "t", output_type="stat")
     t_map_3min1back.to_filename('/projects/jgallucci/NEUR/data/analysis/'+sub+'/'+sub+'_1st_GLM_three_min_oneback_tmap.nii.gz')
+    b_map = first_lv_model.compute_contrast(basic_contrasts["threeback_block"],output_type="effect_size")
+    b_map.to_filename('/projects/jgallucci/NEUR/data/analysis/'+sub+'/'+sub+'_1st_GLM_threeback_betamap.nii.gz')
+    b_map_1back = first_lv_model.compute_contrast(basic_contrasts["oneback_block"],output_type="effect_size")
+    b_map_1back.to_filename('/projects/jgallucci/NEUR/data/analysis/'+sub+'/'+sub+'_1st_GLM_oneback_betamap.nii.gz')
+    b_map_3min1back = first_lv_model.compute_contrast(basic_contrasts["threeback_minus_oneback"],output_type="effect_size")
+    b_map_3min1back.to_filename('/projects/jgallucci/NEUR/data/analysis/'+sub+'/'+sub+'_1st_GLM_three_min_oneback_betamap.nii.gz')
+    
