@@ -2,44 +2,47 @@
 #positive_voxels[1:28] = High Variability in SSD
 #positive_voxels[29:56] = Low Variability in SSD
 
-t.test(positive_voxels$visual[1:28], positive_voxels$visual[29:56])
+positive.dd <- datadist(positive_voxels)
+options(datadist = "positive.dd")
 ##### non-significant difference in positive voxels in visual network
 
-t.test(positive_voxels$somatomotor[1:28], positive_voxels$somatomotor[29:56])
+anova(ols(visual ~ group + motion, data = positive_voxels))
 ### non-significant difference in positive voxels in somatomotor network
 
-t.test(positive_voxels$dorsoattention[1:28], positive_voxels$dorsoattention[29:56])
+anova(ols(dorsoattention ~ group + motion, data = positive_voxels))
 ### Low variability group activated signficantly more voxels than high var in dorsal attention network
 
-t.test(positive_voxels$ventralattention[1:28], positive_voxels$ventralattention[29:56])
+anova(ols(ventralattention ~ group + motion, data = positive_voxels))
 ### Low variability group activated significantly more voxels than high var in ventral attention network
 
-t.test(positive_voxels$frontoparietal[1:28], positive_voxels$frontoparietal[29:56])
+anova(ols(frontoparietal ~ group + motion, data = positive_voxels))
 ### Low variability group activated significantly more voxels than high var in frontoparietal network
 
-t.test(positive_voxels$defaultmode[1:28], positive_voxels$defaultmode[29:56])
+anova(ols(defaultmode ~ group + motion, data = positive_voxels))
 ### Low variability group activated significantly more voxels than high var in default mode network
 
 ######### NEGATIVE VOXEL ACTIVITY
 #negative_voxels[1:28] = High Variability in SSD
 #negative_voxels[29:56] = Low Variability in SSD
 
-t.test(negative_voxels$visual[1:28], negative_voxels$visual[29:56])
+negative.dd <- datadist(negative_voxels)
+options(datadist = "negative.dd")
+anova(ols(visual ~ group + motion, data = negative_voxels))
 ### Low variability group has more negative voxels than high var in visual network
 
-t.test(negative_voxels$somatomotor[1:28], negative_voxels$somatomotor[29:56])
+anova(ols(somatomotor ~ group + motion, data = negative_voxels))
 ### Low variability group has more negative voxels than high var in somatomotor network
 
-t.test(negative_voxels$dorsoattention[1:28], negative_voxels$dorsoattention[29:56])
+anova(ols(dorsoattention ~ group + motion, data = negative_voxels))
 ### non-significant difference in negative voxels in dorsoattention network
 
-t.test(negative_voxels$ventralattention[1:28], negative_voxels$ventralattention[29:56])
+anova(ols(ventralattention ~ group + motion, data = negative_voxels))
 ### non-significant difference in negative voxels in ventralattention network
 
-t.test(negative_voxels$frontoparietal[1:28], negative_voxels$frontoparietal[29:56])
+anova(ols(frontoparietal ~ group + motion, data = negative_voxels))
 ### non-significant difference in negative voxels in frontoparietal network
 
-t.test(negative_voxels$defaultmode[1:28], negative_voxels$defaultmode[29:56])
+anova(ols(defaultmode ~ group + motion, data = negative_voxels))
 ### significantly more negative activity in Low variability than High var in default mode network
 
 
