@@ -82,6 +82,7 @@ for sub in files:
         data_dir='/archive/data/RTMSWM/data/bids'
     
     frame_times = np.arange(n_scans)*t_r
+    frame_times_shift = frame_times + t_r/2
     drift_model = 'polynomial'
     drift_order = 5
     hrf_model = 'spm + derivative + dispersion'
@@ -95,7 +96,7 @@ for sub in files:
 
     #create design matrix
     dm = make_first_level_design_matrix(
-        frame_times, event, drift_model= drift_model, drift_order= drift_order,
+        frame_times_shift, event, drift_model= drift_model, drift_order= drift_order,
         add_regs= conf, hrf_model=hrf_model)
     
     first_lv_model = FirstLevelModel(
