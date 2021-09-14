@@ -25,4 +25,4 @@
 /projects/jgallucci/RTMSWM/data/analysis/sub-CMHWM076/sub-CMHWM076_1st_GLM_threeback_min_oneback_betamap.dscalar.nii
 /projects/jgallucci/RTMSWM/data/analysis/sub-CMHWM027/sub-CMHWM027_1st_GLM_threeback_min_oneback_betamap.dscalar.nii
 /projects/jgallucci/RTMSWM/data/analysis/sub-CMHWM018/sub-CMHWM018_1st_GLM_threeback_min_oneback_betamap.dscalar.nii
-/projects/jgallucci/NEUR/data/analysis/sub-CMHSCZ119/sub-CMHSCZ119_1st_GLM_threeback_min_oneback_betamap.dscalar.nii
+/projects/jgallucci/RTMSWM/data/analysis/sub-CMHWM092/sub-CMHWM092_1st_GLM_threeback_min_oneback_betamap.dscalar.nii
