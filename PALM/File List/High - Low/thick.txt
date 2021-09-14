@@ -25,8 +25,8 @@
 /projects/jgallucci/RTMSWM/ciftify/sub-CMHWM076_smoothed15.dscalar.nii
 /projects/jgallucci/RTMSWM/ciftify/sub-CMHWM027_smoothed15.dscalar.nii
 /projects/jgallucci/RTMSWM/ciftify/sub-CMHWM018_smoothed15.dscalar.nii
-/projects/jgallucci/NEUR/ciftify/sub-CMHSCZ119_smoothed15.dscalar.nii
 /projects/jgallucci/RTMSWM/ciftify/sub-CMHWM092_smoothed15.dscalar.nii
+/projects/jgallucci/NEUR/ciftify/sub-CMHSCZ119_smoothed15.dscalar.nii
 /projects/jgallucci/NEUR/ciftify/sub-CMHSCZ108_smoothed15.dscalar.nii
 /projects/jgallucci/NEUR/ciftify/sub-CMHSCZ107_smoothed15.dscalar.nii
 /projects/jgallucci/RTMSWM/ciftify/sub-CMHWM084_smoothed15.dscalar.nii
