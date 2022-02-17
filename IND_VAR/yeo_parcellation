@@ -1,50 +1,44 @@
 ######### POSITIVE VOXEL ACTIVITY
 #positive_voxels[1:28] = High Variability in SSD
 #positive_voxels[29:56] = Low Variability in SSD
+#positive_voxels[56:90] = TDC
 
-positive.dd <- datadist(positive_voxels)
-options(datadist = "positive.dd")
-##### non-significant difference in positive voxels in visual network
+car::Anova(aov(visual~ Group + motion, data = positive_voxels), type = 3) ## NS
 
-anova(ols(visual ~ group + motion, data = positive_voxels))
-### non-significant difference in positive voxels in somatomotor network
+car::Anova(aov(defaultmode~ Group + motion, data = positive_voxels), type = 3)
+summary(glht(aov(defaultmode~ Group + motion, data = positive_voxels), linfct = mcp(Group = "Tukey"))) ##posthoc comparison
 
-anova(ols(dorsoattention ~ group + motion, data = positive_voxels))
-### Low variability group activated signficantly more voxels than high var in dorsal attention network
+car::Anova(aov(somatomotor~ Group + motion, data = positive_voxels), type = 3) ## NS
 
-anova(ols(ventralattention ~ group + motion, data = positive_voxels))
-### Low variability group activated significantly more voxels than high var in ventral attention network
+car::Anova(aov(dorsoattention~ Group + motion, data = positive_voxels), type = 3)
+summary(glht(aov(dorsoattention~ Group + motion, data = positive_voxels), linfct = mcp(Group = "Tukey"))) ##posthoc comparison
 
-anova(ols(frontoparietal ~ group + motion, data = positive_voxels))
-### Low variability group activated significantly more voxels than high var in frontoparietal network
+car::Anova(aov(ventralattention Group + motion, data = positive_voxels), type = 3)
+summary(glht(aov(ventralattention~ Group + motion, data = positive_voxels), linfct = mcp(Group = "Tukey"))) ##posthoc comparison
 
-anova(ols(defaultmode ~ group + motion, data = positive_voxels))
-### Low variability group activated significantly more voxels than high var in default mode network
+car::Anova(aov(frontoparietal~ Group + motion, data = positive_voxels), type = 3)
+summary(glht(aov(frontoparietal~ Group + motion, data = positive_voxels), linfct = mcp(Group = "Tukey"))) ##posthoc comparison
 
 ######### NEGATIVE VOXEL ACTIVITY
 #negative_voxels[1:28] = High Variability in SSD
 #negative_voxels[29:56] = Low Variability in SSD
+#negative_voxels[56:90] = TDC
 
-negative.dd <- datadist(negative_voxels)
-options(datadist = "negative.dd")
-anova(ols(visual ~ group + motion, data = negative_voxels))
-### Low variability group has more negative voxels than high var in visual network
+car::Anova(aov(visual~ Group + motion, data = negative_voxels), type = 3)
+summary(glht(aov(visual~ Group + motion, data = negative_voxels), linfct = mcp(Group = "Tukey"))) ##posthoc comparison
 
-anova(ols(somatomotor ~ group + motion, data = negative_voxels))
-### Low variability group has more negative voxels than high var in somatomotor network
+car::Anova(aov(defaultmode~ Group + motion, data = negative_voxels), type = 3)
+summary(glht(aov(defaultmode~ Group + motion, data = negative_voxels), linfct = mcp(Group = "Tukey"))) ##posthoc comparison
 
-anova(ols(dorsoattention ~ group + motion, data = negative_voxels))
-### non-significant difference in negative voxels in dorsoattention network
+car::Anova(aov(somatomotor~ Group + motion, data = negative_voxels), type = 3)
+summary(glht(aov(somatomotor~ Group + motion, data = negative_voxels), linfct = mcp(Group = "Tukey"))) ##posthoc comparison
 
-anova(ols(ventralattention ~ group + motion, data = negative_voxels))
-### non-significant difference in negative voxels in ventralattention network
+car::Anova(aov(dorsoattention~ Group + motion, data = negative_voxels), type = 3) ##NS
 
-anova(ols(frontoparietal ~ group + motion, data = negative_voxels))
-### non-significant difference in negative voxels in frontoparietal network
+car::Anova(aov(ventralattention Group + motion, data = negative_voxels), type = 3)
+summary(glht(aov(ventralattention~ Group + motion, data = negative_voxels), linfct = mcp(Group = "Tukey"))) ##posthoc comparison
 
-anova(ols(defaultmode ~ group + motion, data = negative_voxels))
-### significantly more negative activity in Low variability than High var in default mode network
-
+car::Anova(aov(frontoparietal~ Group + motion, data = negative_voxels), type = 3) ##NS
 
 ######### PLOTTING
 # colour for Yeo network
@@ -54,15 +48,15 @@ anova(ols(defaultmode ~ group + motion, data = negative_voxels))
 "somatomotor" = "#6699CC"
 "ventralattention"= "#CC00CC"
 "visual"= "#660066"
-ggplot2::ggplot(negative_voxels, aes(x=Group, y=dorsoattention, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#006633", "#006633")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(positive_voxels, aes(x=Group, y=dorsoattention, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#006633", "#006633")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(negative_voxels, aes(x=Group, y=defaultmode, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#CC3333", "#CC3333")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(positive_voxels, aes(x=Group, y=defaultmode, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#CC3333", "#CC3333")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(negative_voxels, aes(x=Group, y=frontoparietal, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#FF9933", "#FF9933")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(positive_voxels, aes(x=Group, y=frontoparietal, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#FF9933", "#FF9933")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(negative_voxels, aes(x=Group, y=somatomotor, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#6699CC", "#6699CC")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(positive_voxels, aes(x=Group, y=somatomotor, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#6699CC", "#6699CC")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(negative_voxels, aes(x=Group, y=ventralattention, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#CC00CC", "#CC00CC")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(positive_voxels, aes(x=Group, y=ventralattention, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#CC00CC", "#CC00CC")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(negative_voxels, aes(x=Group, y=visual, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#660066", "#660066")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
-ggplot2::ggplot(positive_voxels, aes(x=Group, y=visual, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#660066", "#660066")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low")), map_signif_level=TRUE)
+ggplot2::ggplot(negative_voxels, aes(x=Group, y=dorsoattention, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#006633", "#006633", "#006633")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(positive_voxels, aes(x=Group, y=dorsoattention, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#006633", "#006633", "#006633")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(negative_voxels, aes(x=Group, y=defaultmode, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#CC3333", "#CC3333","#CC3333")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(positive_voxels, aes(x=Group, y=defaultmode, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#CC3333", "#CC3333","#CC3333")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(negative_voxels, aes(x=Group, y=frontoparietal, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#FF9933", "#FF9933","#FF9933")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(positive_voxels, aes(x=Group, y=frontoparietal, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#FF9933", "#FF9933","#FF9933")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(negative_voxels, aes(x=Group, y=somatomotor, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#6699CC", "#6699CC","#6699CC")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(positive_voxels, aes(x=Group, y=somatomotor, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#6699CC", "#6699CC","#6699CC")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(negative_voxels, aes(x=Group, y=ventralattention, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#CC00CC", "#CC00CC","#CC00CC")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(positive_voxels, aes(x=Group, y=ventralattention, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#CC00CC", "#CC00CC","#CC00CC")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(negative_voxels, aes(x=Group, y=visual, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#660066", "#660066", "#660066")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
+ggplot2::ggplot(positive_voxels, aes(x=Group, y=visual, fill = Group)) + ggplot2::geom_boxplot() +  scale_fill_manual(values = c("#660066", "#660066", "#660066")) +ggplot2::geom_point() + geom_signif(comparisons = list(c("High", "Low"), c("High","TDC"), c("Low", "TDC")), map_signif_level=TRUE)
