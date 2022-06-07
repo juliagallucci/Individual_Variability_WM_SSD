@@ -1,0 +1,24 @@
+
+### Canonical brain networks analysis , using connectome workbench
+## step 1 threshold at t= 2.6 
+while read subid;
+do
+wb_command -cifti-math 'x >= 2.6' #threshold positive voxels
+/projects/jgallucci/ind_var/fmri/${subid}/threshold_positive_${subid}.dscalar.nii -var x /projects/jgallucci/ind_var/fmri/${subid}/${subid}_1st_GLM_threeback_min_oneback_tmap.dscalar.nii
+wb_command -cifti-math 'x <= -2.6' #threshold negative voxels
+/projects/jgallucci/ind_var/fmri/${subid}/threshold_minus_${subid}.dscalar.nii -var x /projects/jgallucci/ind_var/fmri/${subid}/${subid}_1st_GLM_threeback_min_oneback_tmap.dscalar.nii
+done < /projects/jgallucci/ind_var/fmri/Scz.txt
+
+## step 2 parcelate positive and negative voxel t-maps to yeo 7 network atlas
+while read subid;
+do
+wb_command -cifti-parcellate /projects/jgallucci/ind_var/fmri/${subid}/threshold_positive_${subid}.dscalar.nii /archive/resources/atlases/rsn_yeo-cortex_buckner-cerebellum_choi-striatum_thalamus_7networks_networks_MWfix.dlabel.nii -method COUNT_NONZERO 'COLUMN' /projects/jgallucci/ind_var/fmri/${subid}/positive.pscalar.nii
+wb_command -cifti-parcellate /projects/jgallucci/ind_var/fmri/${subid}/threshold_minus_${subid}.dscalar.nii /archive/resources/atlases/rsn_yeo-cortex_buckner-cerebellum_choi-striatum_thalamus_7networks_networks_MWfix.dlabel.nii -method COUNT_NONZERO 'COLUMN' /projects/jgallucci/ind_var/fmri/${subid}/minus.pscalar.nii
+done < /projects/jgallucci/ind_var/fmri/Scz.txt
+
+## step 3 convert pscalar to text file
+while read subid;
+do
+wb_command -cifti-convert -to-text /projects/jgallucci/ind_var/fmri/${subid}/positive.pscalar.nii /projects/jgallucci/ind_var/fmri/${subid}/positive.txt
+wb_command -cifti-convert -to-text /projects/jgallucci/ind_var/fmri/${subid}/minus.pscalar.nii /projects/jgallucci/ind_var/fmri/${subid}/negative.txt
+done < /projects/jgallucci/ind_var/fmri/Scz.txt
