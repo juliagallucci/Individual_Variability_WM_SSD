@@ -42,7 +42,7 @@ corrdf = as.data.frame(corr)
 rownames(corrdf) <- paste(c(rep('TDC', 34), rep('SSD', 56)), seq(1:nrow(corrdf)), sep='_')
 colnames(corrdf) <- rownames(corrdf)
 #change diagnoal values from 0 to lowest value, to maximize scale
-diag(corrdf) <- 0.4200803 
+diag(corrdf) <- 0.327
 
 #################################
 #THIS IS WHERE WE'RE ORDERING AND SORTING
@@ -66,7 +66,7 @@ corrdf <- as.matrix(corrdf)
 #visualize matrix for HC only
 corrplot(corrdf, 
          method='color', #get full square, instead of circles
-         cl.lim=c(0.4,1), #set limits of colour scale
+         cl.lim=c(0.3,1), #set limits of colour scale
          col=myColours(100)) #use 100 unique colour shared
 #draw rectangles, based on group
 corrRect(c(sum(grepl('TDC', colnames(corrdf))), sum(grepl('SSD', colnames(corrdf)))))
