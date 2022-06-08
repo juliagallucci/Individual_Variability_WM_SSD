@@ -60,7 +60,7 @@ corrdf <- corrdf[order,order]
 #################################
 #MAKE HEATPLOT
 #set custom colour scale, for plot
-myColours <- colorRampPalette(c("white", "blue", "springgreen")) 
+myColours <- colorRampPalette(c("white", "white", "blue", "green")) 
 #make sure corrmat is a matrix, for plotting
 corrdf <- as.matrix(corrdf)
 #visualize matrix for HC only
